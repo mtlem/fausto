@@ -32,7 +32,7 @@ export default class Estagio1 extends Phaser.Scene{
 
 
         //criando a movimentação do personagem
-        this.control = this.input.leyboard.createCursorKeys();
+        this.control = this.input.keyboard.createCursorKeys();
 
 
 
@@ -40,16 +40,21 @@ export default class Estagio1 extends Phaser.Scene{
 
     }
     update(){
-        if(this.control.left.isDown){
-            this.player.setVelocityX(-150)
 
-        }else if(this.control.right.isDown){
-            this.player.setVelocityX(+150)
+        this.player.setVelocity(0);
+
+        this.player.setVelocity(0);
+
+        if (this.control.left.isDown) {
+            this.player.setVelocityX(-150);
+        } else if (this.control.right.isDown) {
+            this.player.setVelocityX(150);
         }
-        else if(this.control.up.isDown){
-            this.player.setVelocityY(+150)
-        }else if(this.control.isDown){
-            this.player.setVelocityY(-150)
+    
+        if (this.control.up.isDown) {
+            this.player.setVelocityY(-150);
+        } else if (this.control.down.isDown) {
+            this.player.setVelocityY(150);
         };
 
         
