@@ -1,3 +1,5 @@
+
+
 export default class Estagio1 extends Phaser.Scene{
     constructor(){
         super({
@@ -27,8 +29,8 @@ export default class Estagio1 extends Phaser.Scene{
 
         //criando a layer
 
-        const ground = map.createLayer('ground',tilesetVik,0,0);
-        const water = map.createLayer('water',tilesetWater,0,0);
+        // const ground = map.createLayer('ground',tilesetVik,0,0);
+        // const water = map.createLayer('water',tilesetWater,0,0);
 
 
         //criando a movimentação do personagem
@@ -40,6 +42,8 @@ export default class Estagio1 extends Phaser.Scene{
 
     }
     update(){
+
+        //movimentação do jogador
 
         this.player.setVelocity(0);
 
