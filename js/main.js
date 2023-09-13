@@ -2,6 +2,7 @@ import CenaCarregamento from "./cenaCarregamento.js";
 import Estagio1 from "./estagio1.js";
 
 
+
 const config ={
     type: Phaser.AUTO,
     width: 800,
@@ -11,18 +12,19 @@ const config ={
         default: 'arcade',
         arcade:{
             gravity:{
-                y:100,
-                x:100
+                y:0,
+                x:0
 
             }
 
         },
         debug:false
 
-    },
+    },pixelArt:true,
     scene: [
         CenaCarregamento,
         Estagio1,
+        
     ]
 
 
