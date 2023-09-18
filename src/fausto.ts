@@ -9,7 +9,8 @@ export const createPlayer = (scene:Phaser.Scene) =>{
 export const loadSprites = (scene: Phaser.Scene):void =>{
     scene.load.spritesheet('fausto_idle','./assets/fausto/fausto-parado.png',{
         frameWidth: 47,
-        frameHeight:60
+        frameHeight:60,
+        spacing: 45
         
     });
 
@@ -20,14 +21,14 @@ export const loadSprites = (scene: Phaser.Scene):void =>{
     });
 
     scene.load.spritesheet('fausto_right','./assets/fausto/fautoRight.png',{
-        frameWidth: 40,
+        frameWidth: 47,
         frameHeight: 60,
         spacing: 45
         
     });
 
     scene.load.spritesheet('fausto_up','./assets/fausto/faustoUp.png',{
-        frameWidth: 40,
+        frameWidth: 47,
         frameHeight: 60,
         spacing: 45
         
