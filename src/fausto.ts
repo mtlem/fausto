@@ -1,5 +1,7 @@
 export const createPlayer = (scene:Phaser.Scene) =>{
     const player =scene.physics.add.sprite(200,200,'fausto_idle');
+    
+
     creatAnimations(scene);
     return player
 
@@ -9,38 +11,43 @@ export const createPlayer = (scene:Phaser.Scene) =>{
 export const loadSprites = (scene: Phaser.Scene):void =>{
     scene.load.spritesheet('fausto_idle','./assets/fausto/fausto-parado.png',{
         frameWidth: 47,
-        frameHeight:60,
-        spacing: 45
+        frameHeight:60
         
     });
 
     scene.load.spritesheet('fausto_left','./assets/fausto/faustoLeft.png',{
         frameWidth: 47,
         frameHeight: 60,
-        spacing: 45
+        spacing: 20
     });
 
-    scene.load.spritesheet('fausto_right','./assets/fausto/fautoRight.png',{
+    scene.load.spritesheet('fausto_right','./assets/fausto/faustoRight.png',{
         frameWidth: 47,
-        frameHeight: 60,
-        spacing: 45
+        frameHeight: 62,
+        spacing: 20
         
     });
 
     scene.load.spritesheet('fausto_up','./assets/fausto/faustoUp.png',{
         frameWidth: 47,
-        frameHeight: 60,
-        spacing: 45
+        frameHeight: 62,
+        spacing: 20
         
 
     });
 
     scene.load.spritesheet('fausto_down','./assets/fausto/faustoDown.png',{
         frameWidth: 47,
-        frameHeight: 60,
-        spacing: 45
+        frameHeight: 62,
+        spacing: 20
         
 
+    });
+
+    scene.load.spritesheet('fausto_atk','./assets/fausto/faustoAtk.png',{
+        frameWidth: 47,
+        frameHeight: 62,
+        spacing:20
     });
 };
 
@@ -52,7 +59,7 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
             end:5
 
         }),
-        frameRate:9,
+        frameRate:18, //x3
         repeat: -1,
         yoyo:true
     });
@@ -62,23 +69,23 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
         key:'fausto_right',
         frames:scene.anims.generateFrameNames('fausto_right',{
             start: 0,
-            end:7
+            end:6
 
         }),
-        frameRate:9,
+        frameRate:21, //x3
         repeat: -1,
         yoyo:true
     });
 
 
     scene.anims.create({
-        key:'fausto_Up',
-        frames:scene.anims.generateFrameNames('fausto_Up',{
+        key:'fausto_up',
+        frames:scene.anims.generateFrameNames('fausto_up',{
             start: 0,
             end:6
 
         }),
-        frameRate:7,
+        frameRate:21, //x3
         repeat: -1,
         yoyo:true
     });
@@ -90,7 +97,19 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
             end:5
 
         }),
-        frameRate:8,
+        frameRate:24,//x3
+        repeat: -1,
+        yoyo:true
+    });
+
+    scene.anims.create({
+        key:'fausto_atk',
+        frames:scene.anims.generateFrameNames('fausto_atk',{
+            start: 0,
+            end:6
+
+        }),
+        frameRate:24,//x3
         repeat: -1,
         yoyo:true
     });
@@ -99,3 +118,4 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
 
 
 }
+

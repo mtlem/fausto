@@ -23,14 +23,57 @@ export default class Estagio1 extends Phaser.Scene
         const tilesetWater= map.addTilesetImage("water","border");
 
         //layer
-        const ground = map.createLayer('grass',tilesetGrass,0,0)
-        const water = map.createLayer('water',tilesetWater,0,0)
+        const ground = map.createLayer('grass',tilesetGrass,0,0);
+        const water = map.createLayer('water',tilesetWater,0,0);
 
         //player
         this.player = createPlayer(this);
+        this.physics.world.setBounds(0, 0, 800, 900);
+        this.player.setCollideWorldBounds(true);
+
+        //movimentação do personagem
+        this.player.controls = this.input.keyboard.addKeys({
+            up: Phaser.Input.Keyboard.KeyCodes.W,
+            down: Phaser.Input.Keyboard.KeyCodes.S,
+            left: Phaser.Input.Keyboard.KeyCodes.A,
+            right: Phaser.Input.Keyboard.KeyCodes.D
+        });
+
 
     }
-}
+
+    update(){
+
+        //movimentação
+        this.player.setVelocity(0);
+
+        if (this.player.controls.left.isDown) {
+            this.player.setVelocityX(-150);
+            this.player.anims.play('fausto_left',true);
+            
+        } else if (this.player.controls.right.isDown) {
+            this.player.setVelocityX(150);
+            this.player.anims.play('fausto_right',true)
+            
+        }
+        
+        
+        
+        if (this.player.controls.up.isDown) {
+            
+            this.player.setVelocityY(-150);
+            this.player.anims.play('fausto_up',true)
+        } else if (this.player.controls.down.isDown) {
+            this.player.anims.play('fausto_down',true)
+            this.player.setVelocityY(150);
+        }
+        
+    }
+        
+
+
+    }
+
 
 const config = {
     type: Phaser.AUTO,
@@ -42,7 +85,7 @@ const config = {
         default: 'arcade',
         arcade:{
             gravity:{
-                y:0
+                y:0,x:0
             }
         }
 
