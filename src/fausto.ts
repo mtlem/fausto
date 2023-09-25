@@ -1,3 +1,10 @@
+export interface Player extends Phaser.Physics.Arcade.Sprite{
+    isAttacking?: boolean;
+
+}
+
+
+
 export const createPlayer = (scene:Phaser.Scene) =>{
     const player =scene.physics.add.sprite(200,200,'fausto_idle');
     
@@ -44,14 +51,20 @@ export const loadSprites = (scene: Phaser.Scene):void =>{
 
     });
 
-    scene.load.spritesheet('fausto_atk','./assets/fausto/faustoAtk.png',{
-        frameWidth: 47,
-        frameHeight: 62,
-        spacing:20
-    });
+
 };
 
 export const creatAnimations =(scene:Phaser.Scene):void =>{
+
+    scene.anims.create({
+        key:'fausto_idle',
+        frames:scene.anims.generateFrameNames('fausto_idle',{
+            start:0,
+            end:0
+        })
+    })
+
+
     scene.anims.create({
         key:'fausto_left',
         frames:scene.anims.generateFrameNames('fausto_left',{

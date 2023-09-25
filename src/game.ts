@@ -1,8 +1,11 @@
 import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
+import { createControls } from './controls';
 
 export default class Estagio1 extends Phaser.Scene
 {   player;
+    controls;
+    water
     constructor ()
     {
         super('Estagio1');
@@ -24,7 +27,8 @@ export default class Estagio1 extends Phaser.Scene
 
         //layer
         const ground = map.createLayer('grass',tilesetGrass,0,0);
-        const water = map.createLayer('water',tilesetWater,0,0);
+        this.water = map.createLayer('water',tilesetWater,0,0);
+        this.water.setCollisionByProperty({collider:true})
 
         //player
         this.player = createPlayer(this);
@@ -36,8 +40,13 @@ export default class Estagio1 extends Phaser.Scene
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            'J': Phaser.Input.Keyboard.KeyCodes.J
         });
+        
+
+        this.controls = createControls(this);
+        this.physics.add.collider(this.player,this.water);
 
 
     }
@@ -67,6 +76,16 @@ export default class Estagio1 extends Phaser.Scene
             this.player.anims.play('fausto_down',true)
             this.player.setVelocityY(150);
         }
+
+         if(this.player.controls.J.isDown){
+             this.player.setVelocityX(0);
+             this.player.setVelocityY(0);
+         }
+
+        
+        
+
+
         
     }
         
