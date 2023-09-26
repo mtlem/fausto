@@ -1,11 +1,13 @@
 import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
+import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 
 export default class Estagio1 extends Phaser.Scene
 {   player;
     controls;
-    water
+    water;
+    private lastFireTime = 0;
     constructor ()
     {
         super('Estagio1');
@@ -17,6 +19,10 @@ export default class Estagio1 extends Phaser.Scene
        this.load.image('border','./assets/maps/estagio1/water.png');
        this.load.tilemapTiledJSON('map','./assets/maps/estagio1/map.json');
        loadSprites(this)
+       loadFireBallSprite(this)
+       
+       
+       
     }
 
     create ()
@@ -48,6 +54,12 @@ export default class Estagio1 extends Phaser.Scene
         this.controls = createControls(this);
         this.physics.add.collider(this.player,this.water);
 
+        //criando a bola de fogo basica
+
+    
+
+
+
 
     }
 
@@ -78,8 +90,23 @@ export default class Estagio1 extends Phaser.Scene
         }
 
          if(this.player.controls.J.isDown){
-             this.player.setVelocityX(0);
-             this.player.setVelocityY(0);
+            const currentTime  = this.time.now;
+
+            if(currentTime -this.lastFireTime >=300){
+                this.player.setVelocityX(0);
+                this.player.setVelocityY(0);
+                
+                createFireBall(this.player,this);
+
+                this.lastFireTime =currentTime;
+            }
+
+
+            
+             
+
+             
+             
          }
 
         
