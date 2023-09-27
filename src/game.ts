@@ -2,6 +2,7 @@ import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
+import { loadWolfSprites,createWolf,wolfCreateAnimations} from './inimigos/estagio1/wolf';
 
 export default class Estagio1 extends Phaser.Scene
 {   player;
@@ -20,7 +21,11 @@ export default class Estagio1 extends Phaser.Scene
        this.load.tilemapTiledJSON('map','./assets/maps/estagio1/map.json');
        loadSprites(this)
        loadFireBallSprite(this)
-       
+       loadWolfSprites(this)
+
+
+
+
        
        
     }
@@ -54,7 +59,11 @@ export default class Estagio1 extends Phaser.Scene
         this.controls = createControls(this);
         this.physics.add.collider(this.player,this.water);
 
-        //criando a bola de fogo basica
+        //criando lobo na cena inicial
+        
+        
+        wolfCreateAnimations(this)
+        createWolf(this)
 
     
 

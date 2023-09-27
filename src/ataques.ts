@@ -37,7 +37,7 @@ export const createFireBall = (player, scene) => {
     const fireball = scene.physics.add.sprite(x, y, 'fireball');
     fireball.setScale(0.3);
 
-    const fireballSpeed = 150;
+    const fireballSpeed = 350;
     const angle = player.rotation;
 
     // Calcule as componentes de velocidade horizontal e vertical com base no ângulo
@@ -48,14 +48,14 @@ export const createFireBall = (player, scene) => {
 
     //verificando a direção da fireball
     if(player.controls.left.isDown){
-        fireball.setVelocityX(-150);   
+        fireball.setVelocityX(-350);   
     }
 
     if(player.controls.up.isDown){
-        fireball.setVelocityY(-150);
+        fireball.setVelocityY(-350);
         fireball.setVelocityX(0);
     }else if(player.controls.down.isDown){
-        fireball.setVelocityY(150);
+        fireball.setVelocityY(350);
         fireball.setVelocityX(0)
     }
 
