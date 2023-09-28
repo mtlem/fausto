@@ -63,7 +63,20 @@ export default class Estagio1 extends Phaser.Scene
         this.controls = createControls(this);
         this.physics.add.collider(this.player,this.water);
 
-        //criando lobo na cena inicial
+        //configuração da câmera para seguir o personagem;
+        this.cameras.main.startFollow(this.player);
+
+        //zoom na câmera
+        this.cameras.main.setZoom(1.40);
+
+        //definindo os limites da cÂmera
+        const mapWidthInPixels = 800;
+        const mapHeightInPixels = 640;
+
+        this.cameras.main.setBounds(0,0,mapWidthInPixels,mapHeightInPixels);
+
+        
+
         
         
      
