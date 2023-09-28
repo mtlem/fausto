@@ -1,3 +1,5 @@
+import * as Phaser from 'phaser';
+
 
 
 // load de ataques
@@ -30,6 +32,7 @@ export const fireBallAnims = (scene: Phaser.Scene): void => {
 
 
 export const createFireBall = (player, scene) => {
+    
     const x = player.x;
     const y = player.y;
 
@@ -45,10 +48,19 @@ export const createFireBall = (player, scene) => {
     const velocityY = Math.sin(angle) * fireballSpeed;
 
     fireball.setVelocity(velocityX, velocityY);
+    scene.fireballs.add(fireball);
+
+    
+
+    
 
     //verificando a direção da fireball
     if(player.controls.left.isDown){
         fireball.setVelocityX(-350);   
+    }else if(player.controls.right.isDown){
+        fireball.setVelocityX(350)
+    }else{
+        fireball.setVelocityX(350)
     }
 
     if(player.controls.up.isDown){
@@ -58,6 +70,10 @@ export const createFireBall = (player, scene) => {
         fireball.setVelocityY(350);
         fireball.setVelocityX(0)
     }
+
+    return fireball;
+
+
 
     
 }

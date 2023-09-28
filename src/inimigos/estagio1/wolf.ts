@@ -11,9 +11,9 @@ export const wolfCreateAnimations = (scene:Phaser.Scene):void =>{
         key: "wolf_walk",
         frames:scene.anims.generateFrameNames('wolf_walk',{
             start:0,
-            end:4
+            end:3
         }),
-        frameRate:5,
+        frameRate:12,
         repeat: -1
     })
 
@@ -22,4 +22,10 @@ export const wolfCreateAnimations = (scene:Phaser.Scene):void =>{
 export const createWolf =(scene:Phaser.Scene)=>{
     const wolf = scene.physics.add.sprite(400,200,'wolf_walk').setScale(1.8);
     wolf.anims.play("wolf_walk",true);
+
+    return wolf // retorna o objeto wolf
+
+
+    
 }
+

@@ -5,10 +5,14 @@ import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations} from './inimigos/estagio1/wolf';
 
 export default class Estagio1 extends Phaser.Scene
+
 {   player;
     controls;
     water;
     private lastFireTime = 0;
+    private fireballs: Phaser.Physics.Arcade.Group;
+    private wolves:Phaser.Physics.Arcade.Group;
+
     constructor ()
     {
         super('Estagio1');
@@ -62,15 +66,38 @@ export default class Estagio1 extends Phaser.Scene
         //criando lobo na cena inicial
         
         
+     
+
+        //colisão do lobo com a bola de fogo
+
+        this.fireballs = this.physics.add.group();
+        this.wolves = this.physics.add.group();
+
         wolfCreateAnimations(this)
-        createWolf(this)
+        const wolf =createWolf(this)
+        const fireball = createFireBall(this.player,this)
 
-    
+        this.wolves.add(wolf);
+        this.fireballs.add(fireball)
+        
 
+
+
+        
+
+
+        this.physics.add.collider(this.fireballs, this.wolves, (fireball, wolf) => {
+            console.log("Colisão de fireball e wolf");
+            fireball.destroy();
+            wolf.destroy();
+        });
 
 
 
     }
+
+
+
 
     update(){
 
@@ -117,6 +144,8 @@ export default class Estagio1 extends Phaser.Scene
              
              
          }
+
+         
 
         
         
