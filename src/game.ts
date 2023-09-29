@@ -3,12 +3,15 @@ import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations} from './inimigos/estagio1/wolf';
+import { createClock, formatTwoDigits } from './relogio';
 
 export default class Estagio1 extends Phaser.Scene
 
 {   player;
     controls;
     water;
+    clock;
+    elapsedTime;
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
     private wolves:Phaser.Physics.Arcade.Group;
@@ -67,7 +70,7 @@ export default class Estagio1 extends Phaser.Scene
         this.cameras.main.startFollow(this.player);
 
         //zoom na câmera
-        this.cameras.main.setZoom(1.40);
+        this.cameras.main.setZoom(1.4);
 
         //definindo os limites da cÂmera
         const mapWidthInPixels = 800;
@@ -105,16 +108,25 @@ export default class Estagio1 extends Phaser.Scene
             wolf.destroy();
         });
 
+            //criação do relógio na cena
+            
+            this.elapsedTime =0;
+
+
 
 
     }
 
+    
 
 
 
-    update(){
+
+    update(time, delta){
 
         //movimentação
+
+
         this.player.setVelocity(0);
 
         if (this.player.controls.left.isDown) {
@@ -133,10 +145,14 @@ export default class Estagio1 extends Phaser.Scene
             
             this.player.setVelocityY(-150);
             this.player.anims.play('fausto_up',true)
+
+
         } else if (this.player.controls.down.isDown) {
             this.player.anims.play('fausto_down',true)
             this.player.setVelocityY(150);
         }
+
+
 
          if(this.player.controls.J.isDown){
             const currentTime  = this.time.now;
@@ -144,26 +160,43 @@ export default class Estagio1 extends Phaser.Scene
             if(currentTime -this.lastFireTime >=300){
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
-                
+                this.player.anims.play('fausto_atk')
                 createFireBall(this.player,this);
 
                 this.lastFireTime =currentTime;
             }
 
 
-            
-             
-
-             
              
          }
 
+
+         //atualização do tempo
+         this.elapsedTime += delta /1000;
+
+         //cálculo de minutos e segundos
+         const minutes = Math.floor(this.elapsedTime/60);
+         const seconds = Math.floor(this.elapsedTime %60);
+
+         //formatando os minutos e segundos para dois dígitos
+
+         const formattedMinutes  =formatTwoDigits(minutes);
+         const formattedSeconds = formatTwoDigits(seconds)
+
+         //combinação os minutos e segundos formatados
+
+         const formattedTime =  `${formattedMinutes}:${formattedSeconds}`;
+
+         //atualizando texo do relógio
+         this.clock = createClock(this, formattedTime)
+         
          
 
-        
-        
 
 
+       
+
+         
         
     }
         

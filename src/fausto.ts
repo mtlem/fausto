@@ -8,6 +8,7 @@ export interface Player extends Phaser.Physics.Arcade.Sprite{
 export const createPlayer = (scene:Phaser.Scene) =>{
     const player =scene.physics.add.sprite(200,200,'fausto_idle');
     
+    
 
     creatAnimations(scene);
     return player
@@ -50,6 +51,11 @@ export const loadSprites = (scene: Phaser.Scene):void =>{
         
 
     });
+    scene.load.spritesheet('fausto_atk','assets/fausto/faustoAtk.png',{
+        frameWidth:35,
+        frameHeight:60,
+        spacing:95
+    })
 
 
 };
@@ -122,10 +128,11 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
             end:6
 
         }),
-        frameRate:24,//x3
-        repeat: -1,
+        frameRate:7,//x3
         yoyo:true
     });
+
+    
 
 
 
