@@ -10,7 +10,7 @@ export default class Estagio1 extends Phaser.Scene
 {   player;
     controls;
     water;
-    clock;
+    clock: Phaser.GameObjects.Text;
     elapsedTime;
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
@@ -109,6 +109,12 @@ export default class Estagio1 extends Phaser.Scene
         });
 
             //criação do relógio na cena
+            // Crie o objeto de texto do relógio e atribua-o à propriedade clockText
+        this.clock = this.add.text(10, 10, 'Tempo: 00:00', {
+            font: '24px Arial',
+            color: '#000000',
+        });
+
             
             this.elapsedTime =0;
 
@@ -188,7 +194,11 @@ export default class Estagio1 extends Phaser.Scene
          const formattedTime =  `${formattedMinutes}:${formattedSeconds}`;
 
          //atualizando texo do relógio
-         this.clock = createClock(this, formattedTime)
+         this.clock.setText(`Tempo: ${formattedTime}`);
+         
+         
+         
+
          
          
 

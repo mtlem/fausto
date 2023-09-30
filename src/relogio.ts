@@ -1,13 +1,13 @@
 
 // criação do relógio
 
-export const createClock = (scene:Phaser.Scene,change):void =>{
+export const createClock = (scene:Phaser.Scene):void =>{
     
-    scene.add.text(10,10, change,{
+    scene.add.text(10,10, '00:00',{
         font: '24px Arial',
         color: '#000000'
     })
-
+    
 
 }
 
