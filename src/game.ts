@@ -110,11 +110,10 @@ export default class Estagio1 extends Phaser.Scene
 
             //criação do relógio na cena
             // Crie o objeto de texto do relógio e atribua-o à propriedade clockText
-        this.clock = this.add.text(10, 10, 'Tempo: 00:00', {
-            font: '24px Arial',
-            color: '#000000',
-        });
-
+        
+            this.clock =createClock(this,10,10)
+            //configuração do relólgio para seguir a câmera
+            this.clock.setScrollFactor(1, 1);
             
             this.elapsedTime =0;
 
@@ -195,6 +194,12 @@ export default class Estagio1 extends Phaser.Scene
 
          //atualizando texo do relógio
          this.clock.setText(`Tempo: ${formattedTime}`);
+
+
+         //movimentação para que o relógio siga o player
+
+         this.clock.x =  this.cameras.main.worldView.x +10;
+         this.clock.y = this.cameras.main.worldView.y +10; 
          
          
          
