@@ -8,7 +8,7 @@ A motivação deste projeto é desenvolver um jogo para disciplina de estágio 1
 
 ## Objetivo
 
-Fausto é um aprendiz de mago que já está prestes a concluir sua formação. Para isso, seu tutor o mandou para uma jornada em busca dos dos 3 magos, amigos de seu mestre, com o objetivo de derota-los. O Objetivo do jogo vai ser derrotar os 3 magos(junto de seus lacaios) o mais rápido possível, buscando assim ter um tempo menor que os outros jogadores, alcaçando assim uma melhor posição no ranking.
+Fausto é um aprendiz de mago que já está prestes a concluir sua formação. Para isso, seu tutor o mandou para uma jornada em busca dos 3 magos, amigos de seu mestre, com o objetivo de derota-los. O Objetivo do jogo vai ser derrotar os 3 magos(junto de seus lacaios) o mais rápido possível, buscando assim ter um tempo menor que os outros jogadores, alcaçando assim uma melhor posição no ranking.
 
 ## Valor Agregado
 
