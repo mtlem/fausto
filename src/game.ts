@@ -10,6 +10,7 @@ export default class Estagio1 extends Phaser.Scene
 
 {   player;
     wolf;
+    lobos;
     controls;
     water;
     clock: Phaser.GameObjects.Text;
@@ -95,19 +96,22 @@ export default class Estagio1 extends Phaser.Scene
         const wolf =createWolf(this)
         this.wolf =wolf;
 
+       
+
         //spaw de lobos
         const wolfSpawntimer  = this.time.addEvent({
-            delay:5000, //10segundos
+            delay:5000, //5segundos
             callback: ()=>{
-                const wolf =createWolf(this)
-                this.enemys.add(wolf);
-                collisionFireBall(this,fireballs,enemys,fireball,wolf)
+
+                const lobos =createWolf(this)
+                this.enemys.add(lobos);
+                collisionFireBall(this,fireballs,enemys,fireball,lobos)
             },
             callbackScope:this,
             loop:true,
         })
     
-
+        
 
         const fireball = createFireBall(this.player,this)
         fireball.destroy();
@@ -222,7 +226,10 @@ export default class Estagio1 extends Phaser.Scene
 
 
          //movimentação do lobo
-         updateWolfPosition(this.wolf,this.player);
+         this.enemys.getChildren().forEach((enemy) => {
+            updateWolfPosition(enemy, this.player);
+        });
+
          
          
          
