@@ -2,12 +2,13 @@ import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
-import { loadWolfSprites,createWolf,wolfCreateAnimations} from './inimigos/estagio1/wolf';
+import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
 
 export default class Estagio1 extends Phaser.Scene
 
 {   player;
+    wolf;
     controls;
     water;
     clock: Phaser.GameObjects.Text;
@@ -91,6 +92,7 @@ export default class Estagio1 extends Phaser.Scene
 
         wolfCreateAnimations(this)
         const wolf =createWolf(this)
+        this.wolf =wolf;
         const fireball = createFireBall(this.player,this)
 
         this.wolves.add(wolf);
@@ -200,6 +202,10 @@ export default class Estagio1 extends Phaser.Scene
 
          this.clock.x =  this.cameras.main.worldView.x +10;
          this.clock.y = this.cameras.main.worldView.y +10; 
+
+
+         //movimentação do lobo
+         updateWolfPosition(this.wolf,this.player);
          
          
          

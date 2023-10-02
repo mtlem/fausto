@@ -29,3 +29,28 @@ export const createWolf =(scene:Phaser.Scene)=>{
     
 }
 
+
+
+export const updateWolfPosition= (wolf, player)=>{
+    //calculo da direção entre o jogador e o lobo
+    const directionX = player.x - wolf.x;
+    const directionY = player.y - wolf.y;
+
+    //normalizando a direção do vetor unitário
+
+    const length = Math.sqrt(directionX * directionX + directionY *directionY);
+    const normalizedDirectionX = directionX /length;
+    const normalizedDirectionY =directionY/length;
+    
+
+    //velocidade do lobo
+
+    const wolfSpeed =2;
+
+
+    //atualizando a posição do lobo com base na direção e na velocidade
+
+    wolf.x += normalizedDirectionX *wolfSpeed;
+    wolf.y +=normalizedDirectionY * wolfSpeed;
+
+}
