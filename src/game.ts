@@ -4,6 +4,7 @@ import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
+import { collisionFireBall } from './colisoes';
 
 export default class Estagio1 extends Phaser.Scene
 
@@ -15,7 +16,7 @@ export default class Estagio1 extends Phaser.Scene
     elapsedTime;
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
-    private wolves:Phaser.Physics.Arcade.Group;
+    private enemys:Phaser.Physics.Arcade.Group;
 
     constructor ()
     {
@@ -88,36 +89,49 @@ export default class Estagio1 extends Phaser.Scene
         //colisão do lobo com a bola de fogo
 
         this.fireballs = this.physics.add.group();
-        this.wolves = this.physics.add.group();
+        this.enemys = this.physics.add.group();
 
         wolfCreateAnimations(this)
         const wolf =createWolf(this)
         this.wolf =wolf;
+
+        //spaw de lobos
+        const wolfSpawntimer  = this.time.addEvent({
+            delay:5000, //10segundos
+            callback: ()=>{
+                const wolf =createWolf(this)
+                this.enemys.add(wolf);
+                collisionFireBall(this,fireballs,enemys,fireball,wolf)
+            },
+            callbackScope:this,
+            loop:true,
+        })
+    
+
+
         const fireball = createFireBall(this.player,this)
+        fireball.destroy();
 
-        this.wolves.add(wolf);
-        this.fireballs.add(fireball)
+       const enemys= this.enemys.add(wolf);
+        const fireballs =this.fireballs.add(fireball);
         
 
 
-
+        collisionFireBall(this, fireballs,enemys,fireball,wolf)
         
 
-
-        this.physics.add.collider(this.fireballs, this.wolves, (fireball, wolf) => {
-            console.log("Colisão de fireball e wolf");
-            fireball.destroy();
-            wolf.destroy();
-        });
 
             //criação do relógio na cena
-            // Crie o objeto de texto do relógio e atribua-o à propriedade clockText
+            
         
             this.clock =createClock(this,10,10)
             //configuração do relólgio para seguir a câmera
             this.clock.setScrollFactor(1, 1);
             
             this.elapsedTime =0;
+
+        //spawn de lobos
+        
 
 
 
@@ -188,11 +202,14 @@ export default class Estagio1 extends Phaser.Scene
          //formatando os minutos e segundos para dois dígitos
 
          const formattedMinutes  =formatTwoDigits(minutes);
-         const formattedSeconds = formatTwoDigits(seconds)
+         const formattedSeconds = formatTwoDigits(seconds);
+
+         
 
          //combinação os minutos e segundos formatados
 
          const formattedTime =  `${formattedMinutes}:${formattedSeconds}`;
+
 
          //atualizando texo do relógio
          this.clock.setText(`Tempo: ${formattedTime}`);
@@ -209,13 +226,6 @@ export default class Estagio1 extends Phaser.Scene
          
          
          
-
-         
-         
-
-
-
-       
 
          
         

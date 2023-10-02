@@ -1,3 +1,6 @@
+
+import * as Phaser from 'phaser';
+
 export const loadWolfSprites =(scene:Phaser.Scene):void =>{
     scene.load.spritesheet('wolf_walk',"./assets/inimigos/estagio1/wolfWalk.png",{
         frameWidth: 50,
@@ -20,8 +23,12 @@ export const wolfCreateAnimations = (scene:Phaser.Scene):void =>{
 }
 
 export const createWolf =(scene:Phaser.Scene)=>{
-    const wolf = scene.physics.add.sprite(400,200,'wolf_walk').setScale(1.8);
+    const randomWidth = Math.floor(Math.random()* 801);
+    const randomHeight = Math.floor(Math.random()* 641);
+
+    const wolf = scene.physics.add.sprite(randomWidth,randomHeight,'wolf_walk').setScale(1.8);
     wolf.anims.play("wolf_walk",true);
+
 
     return wolf // retorna o objeto wolf
 
@@ -54,3 +61,7 @@ export const updateWolfPosition= (wolf, player)=>{
     wolf.y +=normalizedDirectionY * wolfSpeed;
 
 }
+
+
+//criando lobos em posições aleatórias
+
