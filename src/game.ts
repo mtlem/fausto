@@ -6,7 +6,7 @@ import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} fro
 import { createClock, formatTwoDigits } from './relogio';
 import { collisionFireBall} from './colisoes';
 import MainMenu from './MainMenu';
-
+import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
 
 {   
@@ -145,8 +145,6 @@ export default class Estagio1 extends Phaser.Scene
             this.clock.setScrollFactor(1, 1);
             
             this.elapsedTime =0;
-
-        //spawn de lobos
         
 
 
@@ -236,11 +234,25 @@ export default class Estagio1 extends Phaser.Scene
          this.clock.x =  this.cameras.main.worldView.x +10;
          this.clock.y = this.cameras.main.worldView.y +10; 
 
-         //if(this.player){}
          //movimentação dos lobos
          this.enemys.getChildren().forEach((enemy) => {
             updateWolfPosition(enemy, this.player);
         });
+
+            //Verifica a colisão entre o jogador e os lobos
+            this.physics.add.collider(this.players, this.enemys, (jogador, enemy) => {
+                if (jogador) {
+                    // Ação a ser executada quando houver colisão e o jogador ainda existe
+                    console.log("colidiu!")
+                    enemy.destroy();
+
+                    //iniciar tela de game over
+                    this.scene.start('GameOver')
+
+                }
+            });
+
+        
 
        
        
@@ -258,7 +270,7 @@ const config = {
     backgroundColor: '#125555',
     width: 800,
     height: 640,
-    scene: [MainMenu,Estagio1],
+    scene: [MainMenu,GameOverScene,Estagio1],
     physics:{
         default: 'arcade',
         arcade:{
