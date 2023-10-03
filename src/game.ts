@@ -4,11 +4,13 @@ import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
-import { collisionFireBall } from './colisoes';
+import { collisionFireBall} from './colisoes';
+import MainMenu from './MainMenu';
 
 export default class Estagio1 extends Phaser.Scene
 
-{   player;
+{   
+    player;
     wolf;
     lobos;
     controls;
@@ -18,6 +20,7 @@ export default class Estagio1 extends Phaser.Scene
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
     private enemys:Phaser.Physics.Arcade.Group;
+    private players:Phaser.Physics.Arcade.Group;
 
     constructor ()
     {
@@ -53,6 +56,8 @@ export default class Estagio1 extends Phaser.Scene
 
         //player
         this.player = createPlayer(this);
+        this.players = this.physics.add.group();
+        this.players.add(this.player)
         this.physics.world.setBounds(0, 0, 800, 900);
         this.player.setCollideWorldBounds(true);
 
@@ -110,6 +115,9 @@ export default class Estagio1 extends Phaser.Scene
             callbackScope:this,
             loop:true,
         })
+
+        
+
     
         
 
@@ -122,6 +130,10 @@ export default class Estagio1 extends Phaser.Scene
 
 
         collisionFireBall(this, fireballs,enemys,fireball,wolf)
+
+        
+       
+
         
 
 
@@ -224,17 +236,15 @@ export default class Estagio1 extends Phaser.Scene
          this.clock.x =  this.cameras.main.worldView.x +10;
          this.clock.y = this.cameras.main.worldView.y +10; 
 
-
-         //movimentação do lobo
+         //if(this.player){}
+         //movimentação dos lobos
          this.enemys.getChildren().forEach((enemy) => {
             updateWolfPosition(enemy, this.player);
         });
 
-         
-         
-         
-
-         
+       
+       
+                 
         
     }
         
@@ -248,7 +258,7 @@ const config = {
     backgroundColor: '#125555',
     width: 800,
     height: 640,
-    scene: [Estagio1],
+    scene: [MainMenu,Estagio1],
     physics:{
         default: 'arcade',
         arcade:{

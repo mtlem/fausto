@@ -1,6 +1,7 @@
 
 import { createFireBall } from "./ataques";
 import { createWolf } from "./inimigos/estagio1/wolf";
+import { createPlayer } from "./fausto";
 
 
 
@@ -15,3 +16,4 @@ export const collisionFireBall = (scene, groupA, groupB, fire, ene) => {
     
     });
 }
+

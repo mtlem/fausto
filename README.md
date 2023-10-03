@@ -1,4 +1,4 @@
-# `<Fausto>`
+# a `<Fausto>`
 
 * Link do jogo:
 
