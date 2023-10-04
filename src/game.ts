@@ -5,6 +5,7 @@ import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
 import { collisionFireBall} from './colisoes';
+import { loadHeartSprites,createHeart } from './hearts';
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
@@ -17,10 +18,12 @@ export default class Estagio1 extends Phaser.Scene
     water;
     clock: Phaser.GameObjects.Text;
     elapsedTime;
+    hearts;
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
     private enemys:Phaser.Physics.Arcade.Group;
     private players:Phaser.Physics.Arcade.Group;
+    
 
     constructor ()
     {
@@ -35,6 +38,7 @@ export default class Estagio1 extends Phaser.Scene
        loadSprites(this)
        loadFireBallSprite(this)
        loadWolfSprites(this)
+       loadHeartSprites(this)
 
 
 
@@ -53,6 +57,19 @@ export default class Estagio1 extends Phaser.Scene
         const ground = map.createLayer('grass',tilesetGrass,0,0);
         this.water = map.createLayer('water',tilesetWater,0,0);
         this.water.setCollisionByProperty({collider:true})
+
+        //criando os corações
+        this.hearts = this.add.group()
+        const heart1 = createHeart(this,710,20);
+        const heart2 =createHeart(this,750,20);
+        const heart3 = createHeart(this,785,20);
+
+        //adicionando corações ao grupo hearts
+        this.hearts.add(heart1);
+        this.hearts.add(heart2);
+        this.hearts.add(heart3);
+        
+
 
         //player
         this.player = createPlayer(this);
@@ -229,10 +246,20 @@ export default class Estagio1 extends Phaser.Scene
          this.clock.setText(`Tempo: ${formattedTime}`);
 
 
-         //movimentação para que o relógio siga o player
+         //movimentação para que o relógio acompanhe a câmera
 
          this.clock.x =  this.cameras.main.worldView.x +10;
          this.clock.y = this.cameras.main.worldView.y +10; 
+
+         //movimentação para que os corações acompanhem a câmera
+         
+         const heartsX = this.cameras.main.worldView.right - 10;
+         const heartsY = this.cameras.main.worldView.top + 10;
+ 
+         this.hearts.children.iterate((heart, index) => {
+             heart.setPosition(heartsX - index * (heart.width + 5), heartsY);
+         });
+
 
          //movimentação dos lobos
          this.enemys.getChildren().forEach((enemy) => {
@@ -240,16 +267,25 @@ export default class Estagio1 extends Phaser.Scene
         });
 
             //Verifica a colisão entre o jogador e os lobos
+            let vidas =3;
             this.physics.add.collider(this.players, this.enemys, (jogador, enemy) => {
-                if (jogador) {
-                    // Ação a ser executada quando houver colisão e o jogador ainda existe
-                    console.log("colidiu!")
-                    enemy.destroy();
-
-                    //iniciar tela de game over
-                    this.scene.start('GameOver')
-
+                enemy.destroy();
+                vidas--;
+                // if(vidas ==2){
+                //     const index = 3
+                //    const selectionItem= this.hearts.getChildren()[index];
+                //    selectionItem.destroy()
+                // }
+                // if(vidas ==1){
+                //     const index =2
+                //     const selectionItem = this.hearts.getChildren()[index]
+                //     selectionItem.destroy()
+                    
+                // }
+                if(vidas ==0){
+                    this.scene.start("GameOver")
                 }
+               
             });
 
         

@@ -139,3 +139,7 @@ export const creatAnimations =(scene:Phaser.Scene):void =>{
 
 }
 
+
+export const collisionFausto =(scene:Phaser.Scene, player, group)=>{
+
+}
