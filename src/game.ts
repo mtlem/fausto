@@ -68,6 +68,7 @@ export default class Estagio1 extends Phaser.Scene
         this.hearts.add(heart1);
         this.hearts.add(heart2);
         this.hearts.add(heart3);
+
         
 
 
@@ -249,7 +250,7 @@ export default class Estagio1 extends Phaser.Scene
          //movimentação para que o relógio acompanhe a câmera
 
          this.clock.x =  this.cameras.main.worldView.x +10;
-         this.clock.y = this.cameras.main.worldView.y +10; 
+         this.clock.y = this.cameras.main.worldView.y +415; 
 
          //movimentação para que os corações acompanhem a câmera
          
@@ -257,7 +258,7 @@ export default class Estagio1 extends Phaser.Scene
          const heartsY = this.cameras.main.worldView.top + 10;
  
          this.hearts.children.iterate((heart, index) => {
-             heart.setPosition(heartsX - index * (heart.width + 5), heartsY);
+             heart.setPosition(heartsX - index * (heart.width+5), heartsY);
          });
 
 
@@ -271,17 +272,12 @@ export default class Estagio1 extends Phaser.Scene
             this.physics.add.collider(this.players, this.enemys, (jogador, enemy) => {
                 enemy.destroy();
                 vidas--;
-                // if(vidas ==2){
-                //     const index = 3
-                //    const selectionItem= this.hearts.getChildren()[index];
-                //    selectionItem.destroy()
-                // }
-                // if(vidas ==1){
-                //     const index =2
-                //     const selectionItem = this.hearts.getChildren()[index]
-                //     selectionItem.destroy()
-                    
-                // }
+                const heart = this.hearts.getFirstAlive();
+               if(heart){
+                heart.setAlpha(0); // Faça o coração desaparecer
+                heart.setActive(false);
+                heart.setVisible(false);
+               }
                 if(vidas ==0){
                     this.scene.start("GameOver")
                 }
