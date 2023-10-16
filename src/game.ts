@@ -6,12 +6,14 @@ import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} fro
 import { createClock, formatTwoDigits } from './relogio';
 import { collisionFireBall} from './colisoes';
 import { loadHeartSprites,createHeart } from './hearts';
+import { loadSnakeSprites,snakeCreateAnimations,createSnake } from './snake';
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
 
 {   
     player;
+    snake;
     wolf;
     lobos;
     controls;
@@ -38,6 +40,7 @@ export default class Estagio1 extends Phaser.Scene
        loadSprites(this)
        loadFireBallSprite(this)
        loadWolfSprites(this)
+       loadSnakeSprites(this)
        loadHeartSprites(this)
 
 
@@ -106,7 +109,8 @@ export default class Estagio1 extends Phaser.Scene
 
         
 
-        
+        //criação das animações da cobra
+        snakeCreateAnimations(this)
         
      
 
@@ -132,6 +136,20 @@ export default class Estagio1 extends Phaser.Scene
             },
             callbackScope:this,
             loop:true,
+        })
+
+        //spaw de cobras
+        const snakeSpawnTimer = this.time.addEvent({
+            delay:3000, // 3 segundos
+
+            callback:()=>{
+                const cobras = createSnake(this);
+                this.enemys.add(cobras);
+                collisionFireBall(this,fireballs, enemys, fireball,cobras)
+            },
+            callbackScope:this,
+            loop: true
+
         })
 
         
