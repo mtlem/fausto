@@ -4,15 +4,17 @@ import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
-import { collisionFireBall, collisionfiraballEnemy2} from './colisoes';
+import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3} from './colisoes';
 import { loadHeartSprites,createHeart } from './hearts';
 import { loadSnakeSprites,snakeCreateAnimations,createSnake,updateSnakePosition } from './snake';
+import { loadGoblinSprites,goblinCreateAnimations,createGoblin,updateGoblinPosition } from './inimigos/estagio1/goblin';
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
 
 {   
     player;
+    goblin
     snake;
     wolf;
     lobos;
@@ -25,6 +27,7 @@ export default class Estagio1 extends Phaser.Scene
     private fireballs: Phaser.Physics.Arcade.Group;
     private enemys:Phaser.Physics.Arcade.Group;
     private snakes: Phaser.Physics.Arcade.Group;
+    private goblins: Phaser.Physics.Arcade.Group
     private players:Phaser.Physics.Arcade.Group;
     
 
@@ -42,6 +45,7 @@ export default class Estagio1 extends Phaser.Scene
        loadFireBallSprite(this)
        loadWolfSprites(this)
        loadSnakeSprites(this)
+       loadGoblinSprites(this)
        loadHeartSprites(this)
 
 
@@ -72,6 +76,7 @@ export default class Estagio1 extends Phaser.Scene
         this.hearts.add(heart1);
         this.hearts.add(heart2);
         this.hearts.add(heart3);
+
 
         
 
@@ -112,7 +117,8 @@ export default class Estagio1 extends Phaser.Scene
 
         //criação das animações da cobra
         snakeCreateAnimations(this)
-        
+        //criação das animações do goblin
+        goblinCreateAnimations(this)
      
 
         //grupos
@@ -120,6 +126,9 @@ export default class Estagio1 extends Phaser.Scene
         this.fireballs = this.physics.add.group();
         this.enemys = this.physics.add.group();
         this.snakes = this.physics.add.group()
+        this.goblins = this.physics.add.group()
+
+
 
         wolfCreateAnimations(this)
         const wolf =createWolf(this)
@@ -153,6 +162,9 @@ export default class Estagio1 extends Phaser.Scene
             loop: true
 
         })
+
+        //spaw de goblins
+     
 
         
 
@@ -291,7 +303,11 @@ export default class Estagio1 extends Phaser.Scene
         this.snakes.getChildren().forEach((snake)=>{
             updateSnakePosition(snake,this.player)
         })
-        
+        //movimentação dos goblins
+        const goblins = this.goblins;
+        this.goblins.getChildren().forEach((goblin)=>{
+            updateGoblinPosition(goblin,this.player)
+        })
             //Verifica a colisão entre o jogador e os lobos
             let vidas =3;
             

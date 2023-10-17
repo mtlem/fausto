@@ -47,7 +47,7 @@ export const updateSnakePosition = (snake, player) => {
  
      //velocidade do lobo
  
-     const snakeSpeed =2;
+     const snakeSpeed =0.5;
  
  
      //atualizando a posição do lobo com base na direção e na velocidade
