@@ -4,9 +4,9 @@ import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
-import { collisionFireBall} from './colisoes';
+import { collisionFireBall, collisionfiraballEnemy2} from './colisoes';
 import { loadHeartSprites,createHeart } from './hearts';
-import { loadSnakeSprites,snakeCreateAnimations,createSnake } from './snake';
+import { loadSnakeSprites,snakeCreateAnimations,createSnake,updateSnakePosition } from './snake';
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
@@ -24,6 +24,7 @@ export default class Estagio1 extends Phaser.Scene
     private lastFireTime = 0;
     private fireballs: Phaser.Physics.Arcade.Group;
     private enemys:Phaser.Physics.Arcade.Group;
+    private snakes: Phaser.Physics.Arcade.Group;
     private players:Phaser.Physics.Arcade.Group;
     
 
@@ -114,10 +115,11 @@ export default class Estagio1 extends Phaser.Scene
         
      
 
-        //colisão do lobo com a bola de fogo
+        //grupos
 
         this.fireballs = this.physics.add.group();
         this.enemys = this.physics.add.group();
+        this.snakes = this.physics.add.group()
 
         wolfCreateAnimations(this)
         const wolf =createWolf(this)
@@ -144,8 +146,8 @@ export default class Estagio1 extends Phaser.Scene
 
             callback:()=>{
                 const cobras = createSnake(this);
-                this.enemys.add(cobras);
-                collisionFireBall(this,fireballs, enemys, fireball,cobras)
+                this.snakes.add(cobras);
+                collisionfiraballEnemy2(this,fireballs,this.snakes,fireball,cobras)
             },
             callbackScope:this,
             loop: true
@@ -284,9 +286,15 @@ export default class Estagio1 extends Phaser.Scene
          this.enemys.getChildren().forEach((enemy) => {
             updateWolfPosition(enemy, this.player);
         });
-
+        // movimentação das cobras
+        const snakes = this.snakes
+        this.snakes.getChildren().forEach((snake)=>{
+            updateSnakePosition(snake,this.player)
+        })
+        
             //Verifica a colisão entre o jogador e os lobos
             let vidas =3;
+            
             this.physics.add.collider(this.players, this.enemys, (jogador, enemy) => {
                 enemy.destroy();
                 vidas--;
@@ -301,6 +309,24 @@ export default class Estagio1 extends Phaser.Scene
                 }
                
             });
+
+            //verifica a colisão entre jogador e cobras
+
+            this.physics.add.collider(this.players, this.snakes,(jogador, snake)=>{
+                snake.destroy();
+                vidas--;
+                const heart = this.hearts.getFirstAlive();
+                if(heart){
+                    heart.setAlpha(0); // Faça o coração desaparecer
+                    heart.setActive(false);
+                    heart.setVisible(false);
+
+                }
+                if(vidas == 0){
+                    this.scene.start("GameOver")
+                }
+
+            })
 
         
 

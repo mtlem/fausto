@@ -52,7 +52,7 @@ export const updateWolfPosition= (wolf, player)=>{
 
     //velocidade do lobo
 
-    const wolfSpeed =2;
+    const wolfSpeed =1;
 
 
     //atualizando a posição do lobo com base na direção e na velocidade
