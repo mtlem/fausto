@@ -77,6 +77,10 @@ export default class Estagio1 extends Phaser.Scene
         this.hearts.add(heart2);
         this.hearts.add(heart3);
 
+        // pontuação
+
+        let pontuacao = 0;
+
 
         
 
@@ -144,6 +148,15 @@ export default class Estagio1 extends Phaser.Scene
                 const lobos =createWolf(this)
                 this.enemys.add(lobos);
                 collisionFireBall(this,fireballs,enemys,fireball,lobos)
+                if(collisionFireBall){
+                    pontuacao += 5;
+                    console.log(`Pontuação atual é ${pontuacao}`)
+                    if(pontuacao >=10 && pontuacao <=15){
+                        console.log("O boss chegou")
+                    }
+                    
+                }
+                
             },
             callbackScope:this,
             loop:true,
@@ -157,11 +170,22 @@ export default class Estagio1 extends Phaser.Scene
                 const cobras = createSnake(this);
                 this.snakes.add(cobras);
                 collisionfiraballEnemy2(this,fireballs,this.snakes,fireball,cobras)
+                if(collisionfiraballEnemy2){
+                    pontuacao +=3;
+                    console.log(`pontuação atual é ${pontuacao}`)
+                    if(pontuacao >=10 && pontuacao <=15){
+                        console.log("O boss chegou")
+                    }
+                }
             },
             callbackScope:this,
             loop: true
 
         })
+
+       if(pontuacao >=10){
+        console.log("O boss chegou")
+       }
 
         //spaw de goblins
      
