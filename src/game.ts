@@ -8,12 +8,14 @@ import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3} fro
 import { loadHeartSprites,createHeart } from './hearts';
 import { loadSnakeSprites,snakeCreateAnimations,createSnake,updateSnakePosition } from './snake';
 import { loadGoblinSprites,goblinCreateAnimations,createGoblin,updateGoblinPosition } from './inimigos/estagio1/goblin';
+import { loadEidarSprites,createEidarAnimations,createEidar } from './inimigos/estagio1/eidar';
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 export default class Estagio1 extends Phaser.Scene
 
 {   
     player;
+    eidar;
     goblin
     snake;
     wolf;
@@ -47,6 +49,7 @@ export default class Estagio1 extends Phaser.Scene
        loadSnakeSprites(this)
        loadGoblinSprites(this)
        loadHeartSprites(this)
+       loadEidarSprites(this)
 
 
 
@@ -76,10 +79,20 @@ export default class Estagio1 extends Phaser.Scene
         this.hearts.add(heart1);
         this.hearts.add(heart2);
         this.hearts.add(heart3);
+        
+
+        
 
         // pontuação
 
         let pontuacao = 0;
+        //controle de verificação do boss
+        let bossCreated = false;
+
+
+
+        
+
 
 
         
@@ -121,9 +134,6 @@ export default class Estagio1 extends Phaser.Scene
 
         //criação das animações da cobra
         snakeCreateAnimations(this)
-        //criação das animações do goblin
-        goblinCreateAnimations(this)
-     
 
         //grupos
 
@@ -151,9 +161,14 @@ export default class Estagio1 extends Phaser.Scene
                 if(collisionFireBall){
                     pontuacao += 5;
                     console.log(`Pontuação atual é ${pontuacao}`)
-                    if(pontuacao >=10 && pontuacao <=15){
-                        console.log("O boss chegou")
+
+                    if (pontuacao >= 30) {
+                        if(bossCreated == false){
+                            createEidar(this)
+                            bossCreated = true
+                        }
                     }
+                    
                     
                 }
                 
@@ -173,9 +188,13 @@ export default class Estagio1 extends Phaser.Scene
                 if(collisionfiraballEnemy2){
                     pontuacao +=3;
                     console.log(`pontuação atual é ${pontuacao}`)
-                    if(pontuacao >=10 && pontuacao <=15){
-                        console.log("O boss chegou")
+                    if (pontuacao >= 30) {
+                        if(bossCreated == false){
+                            createEidar(this)
+                            bossCreated = true;
+                        }
                     }
+
                 }
             },
             callbackScope:this,
@@ -183,9 +202,6 @@ export default class Estagio1 extends Phaser.Scene
 
         })
 
-       if(pontuacao >=10){
-        console.log("O boss chegou")
-       }
 
         //spaw de goblins
      
@@ -367,6 +383,10 @@ export default class Estagio1 extends Phaser.Scene
                 }
 
             })
+
+            
+
+
 
         
 
