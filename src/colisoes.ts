@@ -42,10 +42,18 @@ export const collisionFireballEnemy3 =(scene,groupA,groupB,fire,ene) =>{
 export const collisionfiraballBoss =(scene,groupA,groupB,fire,ene)=>{
     return scene.physics.add.collider(groupA, groupB, (fire, ene) => {
         fire.destroy();
-        ene.destroy()
+        ene.destroy();
     
     });
 
+}
+
+export const collisionfireballPlayerFireBallBoss =(scene:Phaser.Scene, groupA,groupB, fireP,fireB)=>{
+    return scene.physics.add.collider(groupA,groupB,(fireP,fireB)=>{
+        fireP.destroy();
+        fireB.destroy();
+
+    })
 }
 
 

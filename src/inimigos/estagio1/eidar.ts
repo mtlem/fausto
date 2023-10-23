@@ -15,7 +15,7 @@ export const createEidarAnimations =(scene:Phaser.Scene):void =>{
             start:0,
             end:8
         }),
-        frameRate:18,
+        frameRate:25,
         repeat: -1
     })
 }

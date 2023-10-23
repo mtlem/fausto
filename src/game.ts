@@ -1,10 +1,10 @@
 import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
-import { loadFireBallSprite ,fireBallAnims,createFireBall} from './ataques';
+import { loadFireBallSprite ,fireBallAnims,createFireBall,loadFireballBossSprites,createFireballBoss} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
-import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3,collisionfiraballBoss} from './colisoes';
+import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3,collisionfiraballBoss,collisionfireballPlayerFireBallBoss} from './colisoes';
 import { loadHeartSprites,createHeart } from './hearts';
 import { loadSnakeSprites,snakeCreateAnimations,createSnake,updateSnakePosition } from './snake';
 import { loadGoblinSprites,goblinCreateAnimations,createGoblin,updateGoblinPosition } from './inimigos/estagio1/goblin';
@@ -29,7 +29,9 @@ export default class Estagio1 extends Phaser.Scene
     createB
     verifica
     private lastFireTime = 0;
+    private lastFireTimeBoss =0
     private fireballs: Phaser.Physics.Arcade.Group;
+    private fireballsBoss :Phaser.Physics.Arcade.Group
     private enemys:Phaser.Physics.Arcade.Group;
     private snakes: Phaser.Physics.Arcade.Group;
     private goblins: Phaser.Physics.Arcade.Group
@@ -50,6 +52,7 @@ export default class Estagio1 extends Phaser.Scene
        this.load.tilemapTiledJSON('map','./assets/maps/estagio1/map.json');
        loadSprites(this)
        loadFireBallSprite(this)
+       loadFireballBossSprites(this)
        loadWolfSprites(this)
        loadSnakeSprites(this)
        loadGoblinSprites(this)
@@ -95,6 +98,7 @@ export default class Estagio1 extends Phaser.Scene
         this.createB =false
         let bossCollisionOcurred =false;
         this.verifica = bossCollisionOcurred
+        let ideiar
 
 
 
@@ -145,6 +149,7 @@ export default class Estagio1 extends Phaser.Scene
         //grupos
 
         this.fireballs = this.physics.add.group();
+        this.fireballsBoss =this.physics.add.group()
         this.enemys = this.physics.add.group();
         this.snakes = this.physics.add.group()
         this.goblins = this.physics.add.group()
@@ -174,11 +179,21 @@ export default class Estagio1 extends Phaser.Scene
                         if(this.createB == false){
                             const eidar = createEidar(this)
                             this.eidar =eidar
-                            createEidarAnimations(this)
+                            //createEidarAnimations(this)
                             this.bosses.add(eidar)
                             this.createB = true
+                            
+                            
+                            // if(!this.verifica&&this.createB == true){
+                            //     const currentTime =this.time.now;
+
+                            // }
+                            
+                            
+
                            
                         }
+
                     }
                     
                     
@@ -204,7 +219,7 @@ export default class Estagio1 extends Phaser.Scene
                         if(this.createB == false){
                             const eidar =createEidar(this);
                             this.eidar = eidar
-                            createEidarAnimations(this)
+                            //createEidarAnimations(this)
                             this.bosses.add(eidar);
                             this.createB = true;
                           
@@ -218,6 +233,28 @@ export default class Estagio1 extends Phaser.Scene
 
         })
 
+        //looping para a bola de fogo
+        
+            // const fireBallBossSpawn = this.time.addEvent({
+            //     delay:2500, // 2.5 segundos
+            //     callback:()=>{
+            //         if(!this.verifica&&this.createB == true){
+            //             const fireBoss = createFireballBoss(this, this.eidar)
+            //             this.fireballsBoss.add(fireBoss)
+            //             this.physics.overlap(fireballs, this.fireballsBoss, (fireball, fireBoss) => {
+            //                 // Esta função será chamada quando houver colisão entre as bolas de fogo do jogador e do chefe
+            //                 // Aqui você pode adicionar lógica para o que acontece quando as bolas de fogo colidem, como removê-las do jogo
+            //                 fireball.destroy();
+            //                 fireBoss.destroy();
+            //             });
+
+
+            //         }
+            //     },
+            //     callbackScope:this,
+            //     loop: true
+
+            // })
 
 
      
@@ -307,9 +344,29 @@ export default class Estagio1 extends Phaser.Scene
                 this.lastFireTime =currentTime;
             }
 
+        
+
+
 
              
          }
+
+           // spwan de fireball boss
+
+             if(!this.verifica&&this.createB == true){
+                const currentTime =this.time.now;
+
+                if(currentTime - this.lastFireTimeBoss >=500){
+                   const fireballBoss = createFireballBoss(this,this.eidar)
+                   
+                   const fireball = this.fireballs.getChildren()
+                   //this.fireballsBoss.add(fireballBoss)
+                   collisionfiraballBoss(this,this.fireballs,this.fireballsBoss,fireball, fireballBoss)
+                   
+                    this.lastFireTimeBoss = currentTime
+
+                }
+            }
 
 
          //atualização do tempo
