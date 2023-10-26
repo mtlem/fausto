@@ -94,9 +94,9 @@ export const createFireballBoss=(scene:Phaser.Scene, boss)=>{
 
     // Crie a bola de fogo como um sprite
     const fireballBoss = scene.physics.add.sprite(x, y, 'fireball_boss');
-    fireballBoss.setScale(0.7);
+    fireballBoss.setScale(0.6);
 
-    const fireballSpeed = 350;
+    const fireballSpeed = 0.1;
     const angle = boss.rotation;
 
     // Calcule as componentes de velocidade horizontal e vertical com base no ângulo
@@ -105,25 +105,38 @@ export const createFireballBoss=(scene:Phaser.Scene, boss)=>{
 
     fireballBoss.setVelocity(velocityX, velocityY);
 
-    if(boss){
-        if (boss.x >= screenWidth - 30 && boss.y <= screenHeight - 30) {
-            fireballBoss.setVelocityX(-350); // Mova para baixo
-        } if (boss.y >= screenHeight - 30 && boss.x >30) {
-            fireballBoss.setVelocityY(-350); // Mova para a esquerda
-        }  if (boss.x <= largTeste && boss.y >30) {
-            fireballBoss.setVelocityX(350); // Mova para cima quando se aproximar do limite à esquerda
-        } if(boss.y<=30 && boss.x<=30){
-            fireballBoss.setVelocityY(350)
-        }if(boss.y >= screenHeight - 30 && boss.x <= screenWidth -30){
-            fireballBoss.setAccelerationY(-350)
-        }
-        else {
-            fireballBoss.setVelocityY(350); // Mova para a direita
+    // if(boss){
+    //     if (boss.x >= screenWidth - 30 && boss.y <= screenHeight - 30) {
+    //         fireballBoss.setVelocityX(-350); // Mova para baixo
+    //     } if (boss.y >= screenHeight - 30 && boss.x >30) {
+    //         fireballBoss.setVelocityY(-350); // Mova para a esquerda
+    //     }  if (boss.x <= largTeste && boss.y >30) {
+    //         fireballBoss.setVelocityX(350); // Mova para cima quando se aproximar do limite à esquerda
+    //     } if(boss.y<=30 && boss.x<=30){
+    //         fireballBoss.setVelocityY(350)
+    //     }if(boss.y >= screenHeight - 30 && boss.x <= screenWidth -30){
+    //         fireballBoss.setAccelerationY(-350)
+    //     }
+    //     else {
+    //         fireballBoss.setVelocityY(350); // Mova para a direita
             
-        }
-    }
+    //     }
+    // }
     return fireballBoss
     
 
 
 }
+
+export const updateFireballBossPosition = (fireball, playerX, playerY) => {
+    // Calcula a direção do jogador em relação à bola de fogo
+    const angle = Math.atan2(playerY - fireball.y, playerX - fireball.x);
+
+    // Define a velocidade da bola de fogo (ajuste conforme necessário)
+    const speed = 5;
+
+    // Atualiza a posição da bola de fogo com base na direção e velocidade
+    fireball.x += Math.cos(angle) * speed;
+    fireball.y += Math.sin(angle) * speed;
+};
+

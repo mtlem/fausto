@@ -1,7 +1,7 @@
 import * as Phaser from 'phaser';
 import { createPlayer,loadSprites } from './fausto';
 import { createControls } from './controls';
-import { loadFireBallSprite ,fireBallAnims,createFireBall,loadFireballBossSprites,createFireballBoss} from './ataques';
+import { loadFireBallSprite ,fireBallAnims,createFireBall,loadFireballBossSprites,createFireballBoss,updateFireballBossPosition} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
 import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3,collisionfiraballBoss,collisionfireballPlayerFireBallBoss} from './colisoes';
@@ -31,12 +31,12 @@ export default class Estagio1 extends Phaser.Scene
     private lastFireTime = 0;
     private lastFireTimeBoss =0
     private fireballs: Phaser.Physics.Arcade.Group;
-    private fireballsBoss :Phaser.Physics.Arcade.Group
     private enemys:Phaser.Physics.Arcade.Group;
     private snakes: Phaser.Physics.Arcade.Group;
     private goblins: Phaser.Physics.Arcade.Group
     private players:Phaser.Physics.Arcade.Group;
     private bosses:Phaser.Physics.Arcade.Group;
+    private fireballsBoss :Phaser.Physics.Arcade.Group
     
     
 
@@ -353,20 +353,26 @@ export default class Estagio1 extends Phaser.Scene
 
            // spwan de fireball boss
 
-             if(!this.verifica&&this.createB == true){
+             if(this.createB == true){
                 const currentTime =this.time.now;
 
-                if(currentTime - this.lastFireTimeBoss >=500){
+                if(currentTime - this.lastFireTimeBoss >=3000){
                    const fireballBoss = createFireballBoss(this,this.eidar)
+                   fireballBoss.update()
                    
                    const fireball = this.fireballs.getChildren()
-                   //this.fireballsBoss.add(fireballBoss)
+                   this.fireballsBoss.add(fireballBoss)
+
                    collisionfiraballBoss(this,this.fireballs,this.fireballsBoss,fireball, fireballBoss)
+                 
                    
                     this.lastFireTimeBoss = currentTime
 
                 }
             }
+            // atualizando posição da bola de fogo
+           
+            
 
 
          //atualização do tempo
@@ -476,9 +482,16 @@ export default class Estagio1 extends Phaser.Scene
 
             //movimentação do boss
         if(!this.verifica&&this.createB == true){
-            const speed =250;
+            const speed =350;
             eidarUpdatePosition(this.eidar,speed,this)
         }
+
+        // movimentação da bola de fogo:
+        this.fireballsBoss.getChildren().forEach((firellBoss) => {
+            updateFireballBossPosition(firellBoss,this.player.x,this.player.y)
+       
+        });
+       
 
    
           
