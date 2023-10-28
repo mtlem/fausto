@@ -51,3 +51,5 @@ export const eidarUpdatePosition = (boss, speed, scene: Phaser.Scene) => {
         }
     }
 };
+
+

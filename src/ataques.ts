@@ -96,7 +96,7 @@ export const createFireballBoss=(scene:Phaser.Scene, boss)=>{
     const fireballBoss = scene.physics.add.sprite(x, y, 'fireball_boss');
     fireballBoss.setScale(0.6);
 
-    const fireballSpeed = 0.1;
+    const fireballSpeed = 0.01;
     const angle = boss.rotation;
 
     // Calcule as componentes de velocidade horizontal e vertical com base no ângulo

@@ -4,7 +4,7 @@ import { createControls } from './controls';
 import { loadFireBallSprite ,fireBallAnims,createFireBall,loadFireballBossSprites,createFireballBoss,updateFireballBossPosition} from './ataques';
 import { loadWolfSprites,createWolf,wolfCreateAnimations,updateWolfPosition} from './inimigos/estagio1/wolf';
 import { createClock, formatTwoDigits } from './relogio';
-import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3,collisionfiraballBoss,collisionfireballPlayerFireBallBoss} from './colisoes';
+import { collisionFireBall, collisionfiraballEnemy2,collisionFireballEnemy3,collisionfiraballBoss,collisionFireballBossPlayer} from './colisoes';
 import { loadHeartSprites,createHeart } from './hearts';
 import { loadSnakeSprites,snakeCreateAnimations,createSnake,updateSnakePosition } from './snake';
 import { loadGoblinSprites,goblinCreateAnimations,createGoblin,updateGoblinPosition } from './inimigos/estagio1/goblin';
@@ -466,6 +466,24 @@ export default class Estagio1 extends Phaser.Scene
                 }
 
             })
+
+            //colisão entre a bola de fogo do boss e o jogador
+            this.physics.add.collider(this.players,this.fireballsBoss,(jodador,fireBoss)=>{
+                fireBoss.destroy();
+                vidas--;
+                const heart = this.hearts.getFirstAlive();
+               if(heart){
+                heart.setAlpha(0); // Faça o coração desaparecer
+                heart.setActive(false);
+                heart.setVisible(false);
+               }
+                if(vidas ==0){
+                    this.scene.start("GameOver")
+                }
+              
+            })
+
+
                  //colisão da bola de fogo com o boss
         this.physics.add.collider(this.fireballs, this.bosses, (fire, boss) => {
             if(!this.verifica){
@@ -479,6 +497,7 @@ export default class Estagio1 extends Phaser.Scene
             }
         
         });
+        //colisão entre a bola de fogo do boss com o player
 
             //movimentação do boss
         if(!this.verifica&&this.createB == true){
@@ -489,6 +508,7 @@ export default class Estagio1 extends Phaser.Scene
         // movimentação da bola de fogo:
         this.fireballsBoss.getChildren().forEach((firellBoss) => {
             updateFireballBossPosition(firellBoss,this.player.x,this.player.y)
+            
        
         });
        

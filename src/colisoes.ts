@@ -56,5 +56,11 @@ export const collisionfireballPlayerFireBallBoss =(scene:Phaser.Scene, groupA,gr
     })
 }
 
+export const collisionFireballBossPlayer =(scene:Phaser.Scene, groupA, groupB,fireB,player )=>{
+    return scene.physics.add.collider(groupA,groupB,(fireB, player)=>{
+        fireB.destroy()
+    })
+}
+
 
 
