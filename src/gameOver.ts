@@ -4,13 +4,28 @@ export default class GameOverScene extends Phaser.Scene {
     constructor() {
         super('GameOver');
     }
+    preload(){
+        //adicionando imagem
+        //const background =this.add.image(200,200,'fausto_idle','./assets/fausto/fausto-parado.png')
+        this.load.image('gameOverBackground', './assets/extras/gameOver.png');
+        
+    }
 
     create() {
-        // Texto de "Game Over"
-    this.add.text(400, 300, 'Game Over', { fontSize: '32px', color: '#000000' }).setOrigin(0.5);
+        //imagem da tela de Game Over(background)
+        const background = this.add.image(400, 320, 'gameOverBackground');
+        background.setDisplaySize(800, 640);
+        background.setOrigin(0.5);
+        //configuração da fonte
+        const fontConfig = {
+            fontFamily: 'Edo SZ', // Substitua pelo nome da fonte instalada na sua máquina
+            fontSize: '64px',
+            color: '#ffffff'
+        };
+    
 
     // Botão para retornar ao menu principal
-    const returnButton = this.add.text(400, 400, 'Voltar ao Menu', { fontSize: '24px', color: '#000000' })
+    const returnButton = this.add.text(400, 590, 'MENU', fontConfig)
         .setOrigin(0.5)
         .setInteractive();
 

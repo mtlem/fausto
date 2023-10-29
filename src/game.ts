@@ -87,6 +87,7 @@ export default class Estagio1 extends Phaser.Scene
         this.hearts.add(heart1);
         this.hearts.add(heart2);
         this.hearts.add(heart3);
+        //this.hearts.setScale(1 / this.cameras.main.zoom);
         
 
         
@@ -409,8 +410,10 @@ export default class Estagio1 extends Phaser.Scene
          const heartsY = this.cameras.main.worldView.top + 10;
  
          this.hearts.children.iterate((heart, index) => {
-             heart.setPosition(heartsX - index * (heart.width+5), heartsY);
-         });
+            heart.setPosition(heartsX - index * (heart.width + 5), heartsY);
+        });
+        
+
 
 
          //movimentação dos lobos

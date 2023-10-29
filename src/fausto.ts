@@ -6,7 +6,7 @@ export interface Player extends Phaser.Physics.Arcade.Sprite{
 
 
 export const createPlayer = (scene:Phaser.Scene) =>{
-    const player =scene.physics.add.sprite(200,200,'fausto_idle');
+    const player =scene.physics.add.sprite(200,200,'fausto_idle').setScale(0.85);
     
     
 

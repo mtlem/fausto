@@ -6,7 +6,10 @@ export default class VictoryScene extends Phaser.Scene {
     }
 
     create() {
-        // Exiba uma mensagem de vitória
+
+      //nome do player
+      const playerName = (window as any).playerName;
+      console.log(playerName)
         const victoryText = this.add.text(400, 320, 'Você Venceu!', {
             fontSize: '32px',
             color: '#fff'
