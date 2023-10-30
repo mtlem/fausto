@@ -23,8 +23,9 @@ export default class MainMenu extends Phaser.Scene {
             this.sys.canvas.height / 2,
             'Iniciar Jogo',
             {
-                fontSize: '32px',
-                color: '#000000',
+                fontSize: '44px',
+                color: '#fff',
+                backgroundColor: '#000'
             }
         );
         startButton.setOrigin(0.5);

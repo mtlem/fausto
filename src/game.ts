@@ -176,7 +176,7 @@ export default class Estagio1 extends Phaser.Scene
                     pontuacao += 5;
                     console.log(`Pontuação atual é ${pontuacao}`)
 
-                    if (pontuacao >= 5) {
+                    if (pontuacao >= 25) {
                         if(this.createB == false){
                             const eidar = createEidar(this)
                             this.eidar =eidar
@@ -216,7 +216,7 @@ export default class Estagio1 extends Phaser.Scene
                 if(collisionfiraballEnemy2){
                     pontuacao +=3;
                     console.log(`pontuação atual é ${pontuacao}`)
-                    if (pontuacao >= 5) {
+                    if (pontuacao >= 25) {
                         if(this.createB == false){
                             const eidar =createEidar(this);
                             this.eidar = eidar
@@ -393,10 +393,16 @@ export default class Estagio1 extends Phaser.Scene
          //combinação os minutos e segundos formatados
 
          const formattedTime =  `${formattedMinutes}:${formattedSeconds}`;
+         //registrando a variável
+         this.registry.set('formattedTime', formattedTime);
+        
 
 
          //atualizando texo do relógio
-         this.clock.setText(`Tempo: ${formattedTime}`);
+         let relogio =this.clock.setText(`Tempo: ${formattedTime}`);
+         
+         
+         
 
 
          //movimentação para que o relógio acompanhe a câmera
@@ -447,6 +453,7 @@ export default class Estagio1 extends Phaser.Scene
                 heart.setVisible(false);
                }
                 if(vidas ==0){
+                 
                     this.scene.start("GameOver")
                 }
                
@@ -496,6 +503,8 @@ export default class Estagio1 extends Phaser.Scene
 
 
                 boss.destroy()
+                let tempoPlayer = relogio;
+                (window as any).tempoPlayer = tempoPlayer
                 this.scene.start("Victory")
             }
         
@@ -539,7 +548,7 @@ export default class Estagio1 extends Phaser.Scene
 const config = {
     type: Phaser.AUTO,
     backgroundColor: '#125555',
-    width: 800,
+    width: 800, //800, 640
     height: 640,
     scene: [MainMenu,GameOverScene,Estagio1,VictoryScene],
     physics:{
@@ -550,6 +559,10 @@ const config = {
             }
         }
 
+    },
+    //ativando o antialiading
+    render:{
+        pixelArt:false
     }
 };
 
