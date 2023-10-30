@@ -176,7 +176,7 @@ export default class Estagio1 extends Phaser.Scene
                     pontuacao += 5;
                     console.log(`Pontuação atual é ${pontuacao}`)
 
-                    if (pontuacao >= 25) {
+                    if (pontuacao >= 50) {
                         if(this.createB == false){
                             const eidar = createEidar(this)
                             this.eidar =eidar
@@ -216,7 +216,7 @@ export default class Estagio1 extends Phaser.Scene
                 if(collisionfiraballEnemy2){
                     pontuacao +=3;
                     console.log(`pontuação atual é ${pontuacao}`)
-                    if (pontuacao >= 25) {
+                    if (pontuacao >= 50) {
                         if(this.createB == false){
                             const eidar =createEidar(this);
                             this.eidar = eidar
@@ -340,7 +340,7 @@ export default class Estagio1 extends Phaser.Scene
                 this.player.setVelocityX(0);
                 this.player.setVelocityY(0);
                 this.player.anims.play('fausto_atk')
-                createFireBall(this.player,this);
+                createFireBall(this.player,this).setScale(0.5);
 
                 this.lastFireTime =currentTime;
             }

@@ -3,9 +3,9 @@ import * as Phaser from 'phaser';
 
 export const loadWolfSprites =(scene:Phaser.Scene):void =>{
     scene.load.spritesheet('wolf_walk',"./assets/inimigos/estagio1/wolfWalk.png",{
-        frameWidth: 50,
+        frameWidth: 58,
         frameHeight:28,
-        spacing:20
+        spacing:9
     })
 }
 
@@ -14,9 +14,9 @@ export const wolfCreateAnimations = (scene:Phaser.Scene):void =>{
         key: "wolf_walk",
         frames:scene.anims.generateFrameNames('wolf_walk',{
             start:0,
-            end:3
+            end:4
         }),
-        frameRate:12,
+        frameRate:10,
         repeat: -1
     })
 

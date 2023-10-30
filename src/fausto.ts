@@ -32,14 +32,14 @@ export const loadSprites = (scene: Phaser.Scene):void =>{
     scene.load.spritesheet('fausto_right','./assets/fausto/faustoRight.png',{
         frameWidth: 47,
         frameHeight: 62,
-        spacing: 20
+        spacing: 18
         
     });
 
     scene.load.spritesheet('fausto_up','./assets/fausto/faustoUp.png',{
         frameWidth: 47,
         frameHeight: 62,
-        spacing: 20
+        spacing: 18
         
 
     });
@@ -47,7 +47,7 @@ export const loadSprites = (scene: Phaser.Scene):void =>{
     scene.load.spritesheet('fausto_down','./assets/fausto/faustoDown.png',{
         frameWidth: 47,
         frameHeight: 62,
-        spacing: 20
+        spacing: 18
         
 
     });
