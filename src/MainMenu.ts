@@ -7,9 +7,13 @@ export default class MainMenu extends Phaser.Scene {
     preload() {
         // Carregue quaisquer recursos do menu, como imagens de fundo ou botões.
         this.load.image('capa','assets/extras/capa.jpeg')
+        this.load.audio('themeSound','assets/sounds/tema.mp3')
     }
 
     create() {
+        //música tema
+        const themeSound = this.sound.add('themeSound')
+        //themeSound.play({volume:0.08})
         //criando background
         const background = this.add.image(400, 320, 'capa');
         background.setDisplaySize(800, 640);
@@ -71,5 +75,8 @@ export default class MainMenu extends Phaser.Scene {
             this.scene.start('Estagio1'); // Inicia o Estágio 1
         });
     }
+    // shutdown(){
+    //     this.sound.get('themeSound').stop();
+    // }
 }
 

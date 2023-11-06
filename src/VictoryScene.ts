@@ -6,8 +6,12 @@ export default class VictoryScene extends Phaser.Scene {
     }
     preload(){
         this.load.image('victory','assets/extras/victory.jpeg')
+        this.load.audio('victorySound', 'assets/sounds/vitoria.mp3')
     }
     create() {
+        //música de vitória
+        const victorySound = this.sound.add('victorySound')
+        victorySound.play({volume:0.5})
         //background
         const background = this.add.image(400, 320, 'victory');
         background.setDisplaySize(800, 640);
@@ -40,5 +44,9 @@ export default class VictoryScene extends Phaser.Scene {
         backButton.on('pointerdown', () => {
             this.scene.start('MainMenu'); // Retorna ao menu principal
         });
+    }
+    shutdown() {
+        // Pare o som ao sair da cena para liberar recursos.
+        this.sound.get('victorySound').stop();
     }
 }

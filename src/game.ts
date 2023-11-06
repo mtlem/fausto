@@ -28,6 +28,7 @@ export default class Estagio1 extends Phaser.Scene
     hearts;
     createB
     verifica
+    fireBallSound
     private lastFireTime = 0;
     private lastFireTimeBoss =0
     private fireballs: Phaser.Physics.Arcade.Group;
@@ -59,6 +60,14 @@ export default class Estagio1 extends Phaser.Scene
        loadHeartSprites(this)
        loadEidarSprites(this)
 
+       //efeitos sonoros
+       this.load.audio('fireballSound', './assets/sounds/fireball.mp3')
+       this.load.audio('explosionSound','./assets/sounds/explosion.mp3')
+       this.load.audio('hurtSound', 'assets/sounds/hurt.mp3')
+       this.load.audio('themeSound','assets/sounds/tema.mp3')
+   
+
+
 
 
 
@@ -68,6 +77,9 @@ export default class Estagio1 extends Phaser.Scene
 
     create ()
     {
+        //música tema
+        const themeSound = this.sound.add('themeSound')
+        themeSound.play({volume:0.03})
         const  map =this.make.tilemap({key:'map'})
         const tilesetGrass= map.addTilesetImage("grass","tiles");
         const tilesetWater= map.addTilesetImage("water","border");
@@ -125,6 +137,10 @@ export default class Estagio1 extends Phaser.Scene
             right: Phaser.Input.Keyboard.KeyCodes.D,
             'J': Phaser.Input.Keyboard.KeyCodes.J
         });
+
+        
+      
+        
         
 
         this.controls = createControls(this);
@@ -173,6 +189,8 @@ export default class Estagio1 extends Phaser.Scene
                 this.enemys.add(lobos);
                 collisionFireBall(this,fireballs,enemys,fireball,lobos)
                 if(collisionFireBall){
+                    const explosionSound = this.sound.add('explosionSound');
+                    explosionSound.play({volume: 0.05})
                     pontuacao += 5;
                     console.log(`Pontuação atual é ${pontuacao}`)
 
@@ -214,6 +232,8 @@ export default class Estagio1 extends Phaser.Scene
                 this.snakes.add(cobras);
                 collisionfiraballEnemy2(this,fireballs,this.snakes,fireball,cobras)
                 if(collisionfiraballEnemy2){
+                    const explosionSound = this.sound.add('explosionSound');
+                    explosionSound.play({volume:0.05})
                     pontuacao +=3;
                     console.log(`pontuação atual é ${pontuacao}`)
                     if (pontuacao >= 50) {
@@ -233,29 +253,6 @@ export default class Estagio1 extends Phaser.Scene
             loop: true
 
         })
-
-        //looping para a bola de fogo
-        
-            // const fireBallBossSpawn = this.time.addEvent({
-            //     delay:2500, // 2.5 segundos
-            //     callback:()=>{
-            //         if(!this.verifica&&this.createB == true){
-            //             const fireBoss = createFireballBoss(this, this.eidar)
-            //             this.fireballsBoss.add(fireBoss)
-            //             this.physics.overlap(fireballs, this.fireballsBoss, (fireball, fireBoss) => {
-            //                 // Esta função será chamada quando houver colisão entre as bolas de fogo do jogador e do chefe
-            //                 // Aqui você pode adicionar lógica para o que acontece quando as bolas de fogo colidem, como removê-las do jogo
-            //                 fireball.destroy();
-            //                 fireBoss.destroy();
-            //             });
-
-
-            //         }
-            //     },
-            //     callbackScope:this,
-            //     loop: true
-
-            // })
 
 
      
@@ -341,6 +338,12 @@ export default class Estagio1 extends Phaser.Scene
                 this.player.setVelocityY(0);
                 this.player.anims.play('fausto_atk')
                 createFireBall(this.player,this).setScale(0.5);
+                const fireballSound = this.sound.add('fireballSound')
+                fireballSound.play({volume: 0.05})
+                console.log("son da bola de fogo")
+               
+                
+
 
                 this.lastFireTime =currentTime;
             }
@@ -446,6 +449,8 @@ export default class Estagio1 extends Phaser.Scene
             this.physics.add.collider(this.players, this.enemys, (jogador, enemy) => {
                 enemy.destroy();
                 vidas--;
+                const hurtSound = this.sound.add('hurtSound');
+                hurtSound.play({volume: 0.05})
                 const heart = this.hearts.getFirstAlive();
                if(heart){
                 heart.setAlpha(0); // Faça o coração desaparecer
@@ -464,6 +469,8 @@ export default class Estagio1 extends Phaser.Scene
             this.physics.add.collider(this.players, this.snakes,(jogador, snake)=>{
                 snake.destroy();
                 vidas--;
+                const hurtSound = this.sound.add('hurtSound')
+                hurtSound.play({volume:0.05})
                 const heart = this.hearts.getFirstAlive();
                 if(heart){
                     heart.setAlpha(0); // Faça o coração desaparecer
@@ -481,6 +488,8 @@ export default class Estagio1 extends Phaser.Scene
             this.physics.add.collider(this.players,this.fireballsBoss,(jodador,fireBoss)=>{
                 fireBoss.destroy();
                 vidas--;
+                const hurtSound = this.sound.add('hurtSound')
+                hurtSound.play({volume:0.05})
                 const heart = this.hearts.getFirstAlive();
                if(heart){
                 heart.setAlpha(0); // Faça o coração desaparecer
@@ -538,6 +547,9 @@ export default class Estagio1 extends Phaser.Scene
        
                  
         
+    }
+    shutdown(){
+        this.sound.get('themeSound').stop();
     }
         
 

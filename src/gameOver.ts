@@ -8,10 +8,15 @@ export default class GameOverScene extends Phaser.Scene {
         //adicionando imagem
         //const background =this.add.image(200,200,'fausto_idle','./assets/fausto/fausto-parado.png')
         this.load.image('gameOverBackground', './assets/extras/gameOver.png');
+        this.load.audio('gameOverSound','./assets/sounds/gameOver.mp3');
+
         
     }
 
     create() {
+        //música de game over
+        const gameOverSound = this.sound.add('gameOverSound')
+        gameOverSound.play({volume:0.5})
         //imagem da tela de Game Over(background)
         const background = this.add.image(400, 320, 'gameOverBackground');
         background.setDisplaySize(800, 640);
@@ -35,5 +40,9 @@ export default class GameOverScene extends Phaser.Scene {
         this.scene.start('MainMenu'); // Suponha que 'MainMenu' seja o nome da cena do menu principal
     });
 
+    }
+    shutdown() {
+        // Pare o som ao sair da cena para liberar recursos.
+        this.sound.get('gameOverSound').stop();
     }
 }

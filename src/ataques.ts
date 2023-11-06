@@ -50,6 +50,10 @@ export const createFireBall = (player, scene) => {
     fireball.setVelocity(velocityX, velocityY);
     scene.fireballs.add(fireball);
 
+    scene.time.delayedCall(7000,function(){
+        fireball.destroy();
+    },[],scene)
+
     
 
     
@@ -140,3 +144,9 @@ export const updateFireballBossPosition = (fireball, playerX, playerY) => {
     fireball.y += Math.sin(angle) * speed;
 };
 
+export const detroyFireballPlayer=(fireballPlayer)=>{
+    fireballPlayer.destroy()
+}
+export const destroyFireBallBoss =(fireBallBoss)=>{
+    fireBallBoss.destroy()
+}
