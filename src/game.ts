@@ -12,6 +12,7 @@ import { loadEidarSprites,createEidarAnimations,createEidar,eidarUpdatePosition 
 import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 import VictoryScene from './VictoryScene';
+import PontuacaoScene from './pontuacao';
 export default class Estagio1 extends Phaser.Scene
 
 {   
@@ -391,13 +392,17 @@ export default class Estagio1 extends Phaser.Scene
          const formattedMinutes  =formatTwoDigits(minutes);
          const formattedSeconds = formatTwoDigits(seconds);
 
+         //importtando variáveis de tempo
+         this.registry.set('formattedMinutes', formattedMinutes);
+         this.registry.set('formattedSeconds',formattedSeconds)
+
          
 
          //combinação os minutos e segundos formatados
 
          const formattedTime =  `${formattedMinutes}:${formattedSeconds}`;
          //registrando a variável
-         this.registry.set('formattedTime', formattedTime);
+         //this.registry.set('formattedTime', formattedTime);
         
 
 
@@ -562,7 +567,7 @@ const config = {
     backgroundColor: '#125555',
     width: 800, //800, 640
     height: 640,
-    scene: [MainMenu,GameOverScene,Estagio1,VictoryScene],
+    scene: [MainMenu,GameOverScene,PontuacaoScene,Estagio1,VictoryScene],
     physics:{
         default: 'arcade',
         arcade:{

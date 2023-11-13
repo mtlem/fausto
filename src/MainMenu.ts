@@ -60,6 +60,27 @@ export default class MainMenu extends Phaser.Scene {
  
          // Adicione o campo de entrada de texto ao DOM
          document.body.appendChild(nameInput);
+
+
+         // criando botão para acessar a cena da pontuação
+         const pontuacaoButton = this.add.text(
+            this.sys.canvas.width / 2,
+            this.sys.canvas.height / 2 + 100, // Ajuste a posição do botão
+            'Ver Pontuações',
+            {
+                fontSize: '28px',
+                color: '#fff',
+                backgroundColor: '#000'
+            }
+        );
+
+        pontuacaoButton.setOrigin(0.5);
+        pontuacaoButton.setInteractive();
+
+        pontuacaoButton.on('pointerdown', () => {
+            this.scene.start('Pontuacao'); // Inicia a cena de pontuação ao clicar no botão
+        });
+         
  
 
 
