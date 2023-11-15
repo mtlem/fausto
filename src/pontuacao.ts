@@ -6,10 +6,16 @@ export default class PontuacaoScene extends Phaser.Scene {
     }
 
     preload() {
-        // Aqui você pode fazer pré-carregamento de assets, se necessário
+        this.load.image('pontuacao','assets/extras/pontuacao.jpeg')
+       
+
     }
 
     create() {
+
+         const background = this.add.image(400,320,'pontuacao')
+        background.setDisplaySize(800,640);
+        background.setOrigin(0.5)
         // Lógica para exibir a pontuação
         const getTopFiveTimes = () => {
             const storedData = localStorage.getItem('topFiveTimes');
@@ -26,8 +32,24 @@ export default class PontuacaoScene extends Phaser.Scene {
 
         // Exibir os tempos na cena
         topFiveTimes.forEach((time, index) => {
-            const timeText = this.add.text(200, yPos, `${index + 1}. ${time}`, { fontSize: '20px', color: '#fff' });
+            const timeText = this.add.text(200, yPos, `${index + 1}. ${time}`, { fontSize: '20px',backgroundColor:'#000000', color: '#fff' });
             yPos += 30; // Ajuste a posição vertical para o próximo tempo
+        });
+
+        //botão para retorno para o menu principal
+        const backButton = this.add.text(400, 400, 'Menu Principal', {
+            fontSize: '24px',
+            color: '#fff',
+            backgroundColor: '#000'
+        });
+        backButton.setOrigin(0.5);
+        backButton.setInteractive();
+
+        
+
+        // Adicione um evento de clique ao botão
+        backButton.on('pointerdown', () => {
+            this.scene.start('MainMenu'); // Retorna ao menu principal
         });
     }
 
