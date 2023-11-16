@@ -80,6 +80,24 @@ export default class MainMenu extends Phaser.Scene {
         pontuacaoButton.on('pointerdown', () => {
             this.scene.start('Pontuacao'); // Inicia a cena de pontuação ao clicar no botão
         });
+
+        //criando um botão para o tutorial
+        const tutorialButton = this.add.text(
+            this.sys.canvas.width / 2,
+            this.sys.canvas.height / 2 + 150, // Ajuste a posição do botão
+            'Tutorial',
+            {
+                fontSize: '28px',
+                color: '#fff',
+                backgroundColor: '#000',
+            }
+        );
+        tutorialButton.setOrigin(0.5);
+        tutorialButton.setInteractive();
+
+        tutorialButton.on('pointerdown', () => {
+            this.scene.start('Tutorial'); // Inicia a cena de tutorial ao clicar no botão
+        });
          
  
 

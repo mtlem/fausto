@@ -13,6 +13,7 @@ import MainMenu from './MainMenu';
 import GameOverScene from './gameOver';
 import VictoryScene from './VictoryScene';
 import PontuacaoScene from './pontuacao';
+import TutorialScene from './tutorial';
 export default class Estagio1 extends Phaser.Scene
 
 {   
@@ -567,7 +568,7 @@ const config = {
     backgroundColor: '#125555',
     width: 800, //800, 640
     height: 640,
-    scene: [MainMenu,GameOverScene,PontuacaoScene,Estagio1,VictoryScene],
+    scene: [MainMenu,GameOverScene,PontuacaoScene,Estagio1,VictoryScene,TutorialScene],
     physics:{
         default: 'arcade',
         arcade:{
