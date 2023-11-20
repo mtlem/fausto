@@ -563,25 +563,44 @@ export default class Estagio1 extends Phaser.Scene
     }
 
 
-const config = {
-    type: Phaser.AUTO,
-    backgroundColor: '#125555',
-    width: 800, //800, 640
-    height: 640,
-    scene: [MainMenu,GameOverScene,PontuacaoScene,Estagio1,VictoryScene,TutorialScene],
-    physics:{
-        default: 'arcade',
-        arcade:{
-            gravity:{
-                y:0,x:0
+    const config = {
+        type: Phaser.AUTO,
+        backgroundColor: '#125555',
+        width: 800,
+        height: 640,
+        scene: [MainMenu, GameOverScene, PontuacaoScene, Estagio1, VictoryScene, TutorialScene],
+        physics: {
+            default: 'arcade',
+            arcade: {
+                gravity: {
+                    y: 0,
+                    x: 0
+                }
             }
+        },
+        // Ativando o antialiasing
+        render: {
+            pixelArt: false
         }
+    };
+    
+    const game = new Phaser.Game(config);
 
-    },
-    //ativando o antialiading
-    render:{
-        pixelArt:false
+    function resize() {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+    
+        game.scene.scenes.forEach((scene) => {
+            scene.cameras.main.setSize(width, height);
+            scene.scale.resize(width, height);
+        });
     }
-};
+    
+    window.addEventListener('resize', resize);
+    
+    // Chame a função resize no início para garantir que o tamanho inicial da tela seja definido corretamente
+    resize();
+    
+    
+   
 
-const game = new Phaser.Game(config);

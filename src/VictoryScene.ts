@@ -19,6 +19,7 @@ export default class VictoryScene extends Phaser.Scene {
 
       //nome do player
       const playerName = (window as any).playerName;
+      
 
       //tempo
       const formattedMinutes = this.registry.get('formattedMinutes');
@@ -34,16 +35,26 @@ export default class VictoryScene extends Phaser.Scene {
 
        //salvando tempo do player no armazenamento local (local storage)
        localStorage.setItem('tempoPlayer', tempoPlayer)
+       localStorage.setItem('nomePlayer',playerName)
 
        //recuperando tempoPlayer do armazenamento local
 
        const tempoPlayerFromStorage = localStorage.getItem('tempoPlayer');
+       const nomePlayerFromStorage = localStorage.getItem('nomePlayer');
 
-       if(tempoPlayerFromStorage){
-            console.log("Tempo do jogador recuperado ");
-       }else{
-        console.log('Nenhum Tempo de jogador encontrado no armazenamento local')
-       }
+     if(playerName && tempoPlayer){
+        //recuperando os dados do localStorage(se houver)
+        const storedData = localStorage.getItem('playerData');
+        const playerData = storedData ? JSON.parse(storedData) : [];
+
+          // Adicione um novo objeto com playerName e tempoPlayer ao array
+          playerData.push({ playerName, tempoPlayer });
+
+          // Salve os dados atualizados no localStorage
+          localStorage.setItem('playerData', JSON.stringify(playerData));
+
+
+     }
 
         
       console.log(playerName)
@@ -57,7 +68,7 @@ export default class VictoryScene extends Phaser.Scene {
         });
         victoryText.setOrigin(0.5);
 
-        const pontuacao = this.add.text(400,360, `Sua pontuação: ${tempoPlayer}`,{
+        const pontuacao = this.add.text(400,360, `Sua pontuação: ${tempoPlayer}. Parabéns!`,{
             fontSize: '44px',
             color: '#fff',
             backgroundColor:'#000'
@@ -88,11 +99,11 @@ export default class VictoryScene extends Phaser.Scene {
         
         let topFiveTimes = getTopFiveTimes();
 
-        const addNewTimeIfTopFive = (newTime) => {
+        const addNewTimeIfTopFive = (newTime, playerName) => {
             // Adicione o novo tempo à lista apenas se for um dos 5 mais rápidos
             if (topFiveTimes.length < 5 || newTime < topFiveTimes[topFiveTimes.length - 1] || !topFiveTimes.length) {
-                topFiveTimes.push(newTime);
-                topFiveTimes.sort((a, b) => a - b); // Ordenar os tempos
+                topFiveTimes.push({ playerName, tempo: newTime });
+                topFiveTimes.sort((a, b) => a.tempo - b.tempo); // Ordenar os tempos
                 topFiveTimes = topFiveTimes.slice(0, 5); // Manter apenas os 5 melhores tempos
                 localStorage.setItem('topFiveTimes', JSON.stringify(topFiveTimes)); // Salvar no armazenamento local
             }
@@ -101,7 +112,7 @@ export default class VictoryScene extends Phaser.Scene {
         // Suponha que 'novoTempo' é o tempo que você deseja adicionar aos 5 melhores tempos
         const novoTempo = sum; // Por exemplo, 2 minutos
         
-        addNewTimeIfTopFive(novoTempo); // Chamar esta função para adicionar um novo tempo, se for um dos 5 melhores
+        addNewTimeIfTopFive(novoTempo, playerName); // Chamar esta função para adicionar um novo tempo, se for um dos 5 melhores
         
 
     }
